@@ -163,7 +163,11 @@ class AkshareDatafeed(BaseDatafeed):
             if row["open"] is None:
                 continue
 
-            dt = datetime.combine(row["date"], time(0,0,0)).astimezone(DB_TZ)
+            dt = row["date"]
+            if type(dt) == str:
+                dt = datetime.strptime(dt, "%Y-%m-%d").astimezone(DB_TZ)
+            elif type(dt) == date:
+                dt = datetime.combine(dt, time(0,0)).astimezone(DB_TZ)
             # dt = datetime.strptime(dt, "%Y-%m-%d")
             # dt = CHINA_TZ.localize(dt)
 
