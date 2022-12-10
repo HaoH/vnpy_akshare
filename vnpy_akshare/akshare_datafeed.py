@@ -87,10 +87,10 @@ def to_ts_asset(symbol, exchange) -> Optional[str]:
 class AkshareDatafeed(BaseDatafeed):
     """akshare数据服务接口"""
 
-    def __init__(self):
+    def __init__(self, username=None, password=None):
         """"""
-        self.username: str = SETTINGS["datafeed.username"]
-        self.password: str = SETTINGS["datafeed.password"]
+        self.username: str = SETTINGS["datafeed.username"] if username is None else username
+        self.password: str = SETTINGS["datafeed.password"] if password is None else password
 
         self.inited: bool = False
 
