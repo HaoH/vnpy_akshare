@@ -3,7 +3,7 @@ from zoneinfo import ZoneInfo
 
 from pandas import Timestamp
 from pytz import timezone
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Callable
 from copy import deepcopy
 
 import pandas as pd
@@ -94,7 +94,7 @@ class AkshareDatafeed(BaseDatafeed):
 
         self.inited: bool = False
 
-    def init(self) -> bool:
+    def init(self, output: Callable = print) -> bool:
         """初始化"""
         if self.inited:
             return True
@@ -105,10 +105,10 @@ class AkshareDatafeed(BaseDatafeed):
 
         return True
 
-    def query_bar_history(self, req: HistoryRequest) -> Optional[List[BarData]]:
+    def query_bar_history(self, req: HistoryRequest, output: Callable = print) -> Optional[List[BarData]]:
         """查询k线数据"""
         if not self.inited:
-            self.init()
+            self.init(output)
 
         symbol = req.symbol
         exchange = req.exchange
